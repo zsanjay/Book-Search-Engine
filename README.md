@@ -1,4 +1,4 @@
-# 📚 Book Search API
+# Book Search API
 
 This is a ** Book Search API Project** implemented using *Java, Maven, and Spring Boot with PostgreSQL and Docker*.
 
