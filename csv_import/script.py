@@ -55,23 +55,23 @@ for col in df_type_dict:
         df_type_dict[col] = replacements[snake_col]
 
 # Convert 'publishDate' and 'firstPublishDate' columns to YYYY-MM-DD
-# for col in ['publishDate', 'firstPublishDate']:
-#     if col in df.columns:
-#         df[col] = pd.to_datetime(df[col], errors='coerce').dt.date
+for col in ['publishDate', 'firstPublishDate']:
+    if col in df.columns:
+        df[col] = pd.to_datetime(df[col], errors='coerce').dt.date
 
 # Insert books data
-# for _, row in df.iterrows():
-#      placeholders = ', '.join(['%s'] * len(books_columns))
-#      cols = ', '.join(books_columns)
-#      sql = f"INSERT INTO books ({cols}) VALUES ({placeholders})"
-#      row_values = [None if pd.isna(row[col]) else row[col] for col in df.columns if col not in ['author']]
-#      book_id_value = row_values[0]
-#      if "-" in str(book_id_value):
-#          bookId = str(book_id_value).split("-")[0]
-#      else:
-#          bookId = str(book_id_value).split(".")[0]
-#      row_values[0] = int(bookId)
-#      cursor.execute(sql, tuple(row_values))
+for _, row in df.iterrows():
+     placeholders = ', '.join(['%s'] * len(books_columns))
+     cols = ', '.join(books_columns)
+     sql = f"INSERT INTO books ({cols}) VALUES ({placeholders})"
+     row_values = [None if pd.isna(row[col]) else row[col] for col in df.columns if col not in ['author']]
+     book_id_value = row_values[0]
+     if "-" in str(book_id_value):
+         bookId = str(book_id_value).split("-")[0]
+     else:
+         bookId = str(book_id_value).split(".")[0]
+     row_values[0] = int(bookId)
+     cursor.execute(sql, tuple(row_values))
 
 # Insert authors data
 if 'author' in df.columns:
