@@ -179,7 +179,36 @@ ORDER BY rank DESC;
 
 ## Module 4: Ingesting & Validating Data
 
-Check row counts:
+### Ingest Data using Python Script
+
+We use a **Python script (`script.py`)** to load book and author data from a CSV file (`books.csv`) into PostgreSQL.
+
+#### 1. Setup Python environment
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install pandas psycopg2-binary numpy python-dotenv
+```
+
+#### 2. Prepare `books.csv`
+
+Place your dataset file in the project root (e.g., `books.csv`) with columns like:
+
+```
+bookId,title,series,rating,description,language,isbn,genres,characters,bookFormat,edition,pages,publisher,publishDate,firstPublishDate,awards,numRatings,ratingsByStars,likedPercent,setting,coverImg,bbeScore,bbeVotes,price,author
+```
+
+#### 3. Run the ingestion script
+
+```bash
+python csv_import/script.py
+```
+---
+
+### Validate the Data After Ingestion
+
+Check total rows:
 
 ```sql
 SELECT count(*) FROM authors;
@@ -187,14 +216,14 @@ SELECT count(*) FROM books;
 SELECT count(*) FROM book_authors;
 ```
 
-Join query:
+Verify joins:
 
 ```sql
-SELECT b.*, a.name AS author_name
+SELECT b.title, a.name AS author_name
 FROM books b
 JOIN book_authors ba ON b.book_id = ba.book_id
 JOIN authors a ON ba.author_id = a.author_id
-WHERE a.name = 'Steve Wozniak';
+LIMIT 10;
 ```
 
 ---
