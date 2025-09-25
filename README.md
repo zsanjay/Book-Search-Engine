@@ -1,6 +1,6 @@
 # Book Search API
 
-This is a ** Book Search API Project** implemented using *Java, Maven, and Spring Boot with PostgreSQL and Docker*.
+This is a *Book Search API Project* implemented using *Java, Maven, and Spring Boot with PostgreSQL and Docker*.
 
 ---
 ## Module 1: Setting Up Java, Maven, and Spring Boot
