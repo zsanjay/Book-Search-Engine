@@ -1,4 +1,3 @@
-import os
 import numpy as np
 import pandas as pd
 import psycopg2
@@ -8,7 +7,6 @@ def to_snake_case(col):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', col).lower()
 
 df = pd.read_csv('books.csv')
-head = df.head()
 
 columns = [to_snake_case(col) for col in df.columns]
 
@@ -46,14 +44,6 @@ replacements = {
     'price' : 'float'
 }
 
-df_type_dict = df.dtypes.to_dict();
-df_type_dict = {to_snake_case(k): v for k, v in df_type_dict.items() if k not in ['author']}
-
-for col in df_type_dict:
-    snake_col = to_snake_case(col)
-    if snake_col in replacements:
-        df_type_dict[col] = replacements[snake_col]
-
 # Convert 'publishDate' and 'firstPublishDate' columns to YYYY-MM-DD
 for col in ['publishDate', 'firstPublishDate']:
     if col in df.columns:
@@ -76,7 +66,6 @@ for _, row in df.iterrows():
 # Insert authors data
 if 'author' in df.columns:
     authors = df['author'].dropna().unique()
-    print("Unique authors found:", authors)
     for index, author in enumerate(authors):
         author = author[:255]
         cursor.execute("INSERT INTO authors (author_id, name) VALUES (%s, %s) ON CONFLICT DO NOTHING", (index + 1, author))
